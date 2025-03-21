@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura - Mental Health Support</title>
+    <!-- SupportAI Widget -->
+    <script type="text/javascript">
+        (function(){
+            d=document;
+            s=d.createElement("script");
+            s.src="https://widget.supportai.com/d09055d59b379e2.js";
+            s.async=1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();
+    </script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-heart-pulse me-2"></i>Aura
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tools">Tools</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#resources">Resources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#profile" id="profileLink">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginBtn">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <p class="text-center mt-3">Don't have an account? <a href="#" id="showRegister">Register</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Register</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="registerEmail" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="registerPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="registerPassword" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                    <p class="text-center mt-3">Already have an account? <a href="#" id="showLogin">Login</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mental Health Questionnaire Modal -->
+    <div class="modal fade" id="questionnaireModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Mental Health Assessment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="progress mb-4"><div class="progress-bar" role="progressbar" style="width: 20%"></div></div>
+                    <form id="questionnaireForm">
+                        <div class="question-container">
+                            <div class="question" id="question1">
+                                <h4>How have you been feeling lately?</h4>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mood" id="mood1" value="excellent">
+                                    <label class="form-check-label" for="mood1">Excellent - I feel energetic and positive</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mood" id="mood2" value="good">
+                                    <label class="form-check-label" for="mood2">Good - I'm doing fine</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mood" id="mood3" value="okay">
+                                    <label class="form-check-label" for="mood3">Okay - Some ups and downs</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="mood" id="mood4" value="down">
+                                    <label class="form-check-label" for="mood4">Down - Feeling low</label>
+                                </div>
+                            </div>
+                            <div class="question" id="question2" style="display: none;">
+                                <h4>How is your sleep quality?</h4>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep" id="sleep1" value="excellent">
+                                    <label class="form-check-label" for="sleep1">Excellent - I sleep well and feel rested</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep" id="sleep2" value="good">
+                                    <label class="form-check-label" for="sleep2">Good - I usually get enough sleep</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep" id="sleep3" value="fair">
+                                    <label class="form-check-label" for="sleep3">Fair - Sometimes have trouble sleeping</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="sleep" id="sleep4" value="poor">
+                                    <label class="form-check-label" for="sleep4">Poor - I often have trouble sleeping</label>
+                                </div>
+                            </div>
+                            <div class="question" id="question3" style="display: none;">
+                                <h4>How would you rate your stress level?</h4>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="stress1" value="low">
+                                    <label class="form-check-label" for="stress1">Low - I handle stress well</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="stress2" value="moderate">
+                                    <label class="form-check-label" for="stress2">Moderate - Some stress but manageable</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="stress3" value="high">
+                                    <label class="form-check-label" for="stress3">High - Often feel stressed</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="stress" id="stress4" value="very_high">
+                                    <label class="form-check-label" for="stress4">Very High - Constantly stressed</label>
+                                </div>
+                            </div>
+                            <div class="question" id="question4" style="display: none;">
+                                <h4>How is your academic performance?</h4>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="academic" id="academic1" value="excellent">
+                                    <label class="form-check-label" for="academic1">Excellent - I'm performing well</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="academic" id="academic2" value="good">
+                                    <label class="form-check-label" for="academic2">Good - Generally doing fine</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="academic" id="academic3" value="struggling">
+                                    <label class="form-check-label" for="academic3">Struggling - Finding it difficult</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="academic" id="academic4" value="poor">
+                                    <label class="form-check-label" for="academic4">Poor - Having significant difficulties</label>
+                                </div>
+                            </div>
+                            <div class="question" id="question5" style="display: none;">
+                                <h4>Do you have a support system?</h4>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="support" id="support1" value="strong">
+                                    <label class="form-check-label" for="support1">Strong - I have good support from family and friends</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="support" id="support2" value="moderate">
+                                    <label class="form-check-label" for="support2">Moderate - Some support available</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="support" id="support3" value="limited">
+                                    <label class="form-check-label" for="support3">Limited - I could use more support</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="support" id="support4" value="none">
+                                    <label class="form-check-label" for="support4">None - I feel isolated</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="button" class="btn btn-secondary" id="prevQuestion" style="display: none;">Previous</button>
+                            <button type="button" class="btn btn-primary" id="nextQuestion">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Section (Initially Hidden) -->
+    <section id="profileSection" class="py-5" style="display: none;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                            <h4 id="profileName" class="card-title"></h4>
+                            <p id="profileEmail" class="text-muted"></p>
+                            <label for="profileImageInput" class="btn btn-outline-primary btn-sm">
+                                Change Photo
+                                <input type="file" id="profileImageInput" accept="image/*" style="display: none;">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Profile Settings</h5>
+                            <form id="profileForm">
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Update Profile</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section text-center">
+        <div class="hero-overlay"></div>
+        <div class="container position-relative">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-start">
+                    <h1 class="display-4 mb-4 text-white">Your Mental Health Matters</h1>
+                    <p class="lead mb-4 text-white">Supporting students through academic stress with tools, resources, and guidance</p>
+                    <a href="#resources" class="btn btn-light btn-lg">Get Started</a>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.stockcake.com/public/1/d/5/1d52ffd0-08bf-4797-86e6-b03dad962379_large/serene-nature-meditation-stockcake.jpg" 
+                         alt="Serene meditation in nature" 
+                         class="img-fluid rounded shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Standards Section -->
+    <section id="standards" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Our Commitment to Excellence</h2>
+            <div class="row g-4">
+                <!-- Real-World Impact -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="standard-card h-100">
+                        <div class="card-body">
+                            <div class="standard-icon mb-3">
+                                <i class="fas fa-globe text-primary"></i>
+                            </div>
+                            <h3 class="card-title h5">Real-World Impact</h3>
+                            <p class="card-text">Addresses critical mental health challenges faced by students, providing practical tools and immediate support for daily struggles.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Interactive tools</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Real-time support</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Practical resources</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sustainability -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="standard-card h-100">
+                        <div class="card-body">
+                            <div class="standard-icon mb-3">
+                                <i class="fas fa-seedling text-primary"></i>
+                            </div>
+                            <h3 class="card-title h5">Sustainability</h3>
+                            <p class="card-text">Built for long-term success with continuous updates, scalable architecture, and sustainable resource management.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Regular updates</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Resource optimization</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Long-term support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scalability -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="standard-card h-100">
+                        <div class="card-body">
+                            <div class="standard-icon mb-3">
+                                <i class="fas fa-expand-arrows-alt text-primary"></i>
+                            </div>
+                            <h3 class="card-title h5">Scalability & Adaptability</h3>
+                            <p class="card-text">Easily scalable platform that adapts to growing user needs and evolving mental health challenges.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Flexible architecture</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Adaptable features</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Growth-ready</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ethics -->
+                <div class="col-md-6 col-lg-3">
+                    <div class="standard-card h-100">
+                        <div class="card-body">
+                            <div class="standard-icon mb-3">
+                                <i class="fas fa-heart text-primary"></i>
+                            </div>
+                            <h3 class="card-title h5">Ethical & Social Responsibility</h3>
+                            <p class="card-text">Committed to ethical practices, data privacy, and inclusive support for all users regardless of background.</p>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Data privacy</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Inclusive design</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i>Ethical practices</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Understanding Student Mental Health Section -->
+    <section id="understanding" class="py-5">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Understanding Student Mental Health</h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="lead mb-4">Mental health challenges among students have become increasingly prevalent in today's academic environment.</p>
+                            <div class="stats-highlights mb-4">
+                                <div class="stat-item mb-3">
+                                    <i class="fas fa-brain text-primary me-2"></i>
+                                    <span>Depression & Anxiety affect 30% of students</span>
+                                </div>
+                                <div class="stat-item mb-3">
+                                    <i class="fas fa-book text-primary me-2"></i>
+                                    <span>25% experience significant academic stress</span>
+                                </div>
+                                <div class="stat-item mb-3">
+                                    <i class="fas fa-moon text-primary me-2"></i>
+                                    <span>20% report regular sleep issues</span>
+                                </div>
+                                <div class="stat-item mb-3">
+                                    <i class="fas fa-users text-primary me-2"></i>
+                                    <span>15% struggle with social isolation</span>
+                                </div>
+                                <div class="stat-item mb-3">
+                                    <i class="fas fa-heart text-primary me-2"></i>
+                                    <span>10% face self-esteem challenges</span>
+                                </div>
+                            </div>
+                            <p class="mt-3">Early recognition and support can significantly improve outcomes. If you're experiencing any of these symptoms, remember you're not alone.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="chart-container" style="position: relative; height: 300px;">
+                                <canvas id="mentalHealthStats"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meditation Section -->
+    <section id="meditation" class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <img src="https://img.freepik.com/free-photo/full-shot-women-meditating-outdoors_23-2149698181.jpg" 
+                         alt="Women meditating outdoors" 
+                         class="img-fluid rounded shadow-lg">
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="mb-4">Find Your Inner Peace</h2>
+                    <p class="lead mb-4">Discover the power of meditation and mindfulness in managing stress and improving mental well-being.</p>
+                    <div class="meditation-features">
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-spa text-primary me-2"></i>
+                            <span>Guided meditation sessions</span>
+                        </div>
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-leaf text-primary me-2"></i>
+                            <span>Mindfulness exercises</span>
+                        </div>
+                        <div class="feature-item mb-3">
+                            <i class="fas fa-heart text-primary me-2"></i>
+                            <span>Stress reduction techniques</span>
+                        </div>
+                    </div>
+                    <a href="#tools" class="btn btn-primary btn-lg mt-3">Start Meditating</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meditation Gallery Section -->
+    <section id="meditation-gallery" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Meditation Spaces</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://images.stockcake.com/public/1/d/5/1d52ffd0-08bf-4797-86e6-b03dad962379_large/serene-nature-meditation-stockcake.jpg" 
+                             alt="Serene meditation in nature" 
+                             class="img-fluid rounded shadow">
+                        <div class="gallery-overlay">
+                            <h4>Nature Meditation</h4>
+                            <p>Find peace in natural surroundings</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://img.freepik.com/free-photo/full-shot-women-meditating-outdoors_23-2149698181.jpg" 
+                             alt="Women meditating outdoors" 
+                             class="img-fluid rounded shadow">
+                        <div class="gallery-overlay">
+                            <h4>Group Meditation</h4>
+                            <p>Connect with others in mindful practice</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="gallery-item">
+                        <img src="https://thumbs.dreamstime.com/b/person-meditates-sunlight-under-tree-field-leaves-surrounding-them-peaceful-meditation-nature-background-345272807.jpg" 
+                             alt="Person meditating under tree" 
+                             class="img-fluid rounded shadow">
+                        <div class="gallery-overlay">
+                            <h4>Tree Meditation</h4>
+                            <p>Experience grounding in nature</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Tools Section -->
+    <section id="tools" class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Quick Tools</h2>
+            <div class="row g-4">
+                <!-- Breathing Exercise -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">Breathing Exercise</h3>
+                            <div class="breathing-container">
+                                <div class="breathing-circle">
+                                    <div class="breathing-text">Breathe</div>
+                                </div>
+                                <div class="breathing-controls mt-3">
+                                    <button class="btn btn-primary" id="startBreathing">Start Exercise</button>
+                                    <button class="btn btn-secondary" id="stopBreathing" style="display: none;">Stop</button>
+                                </div>
+                                <div class="breathing-instructions mt-3">
+                                    <p class="mb-1">Inhale: 4 seconds</p>
+                                    <p class="mb-1">Hold: 4 seconds</p>
+                                    <p class="mb-1">Exhale: 4 seconds</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mood Tracker -->
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <h3 class="card-title">How are you feeling?</h3>
+                            <div class="mood-selector mb-3">
+                                <button class="mood-btn" data-mood="😊">😊</button>
+                                <button class="mood-btn" data-mood="😐">😐</button>
+                                <button class="mood-btn" data-mood="😔">😔</button>
+                                <button class="mood-btn" data-mood="😤">😤</button>
+                                <button class="mood-btn" data-mood="😫">😫</button>
+                            </div>
+                            <p>Track your mood throughout the day</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Study Timer -->
+                <div class="col-md-4">
+                    <div class="tool-card">
+                        <i class="fas fa-clock tool-icon"></i>
+                        <h3>Study Timer</h3>
+                        <p>Stay focused with our Pomodoro-style study timer. Work for 25 minutes, then take a break.</p>
+                        <div class="timer-container text-center">
+                            <div class="progress-ring mt-4">
+                                <div class="timer-display">25:00</div>
+                                <svg class="progress-ring-circle" width="220" height="220">
+                                    <defs>
+                                        <linearGradient id="timer-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop class="timer-gradient" offset="0%"/>
+                                            <stop class="timer-gradient-stop" offset="100%"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <circle class="progress-ring-circle-bg" r="90" cx="110" cy="110"/>
+                                    <circle class="progress-ring-circle-progress" r="90" cx="110" cy="110"/>
+                                </svg>
+                            </div>
+                            <button id="startTimer" class="btn btn-primary">Start Timer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">Mental Health Resources</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <img src="https://images.ctfassets.net/zkw0qlnf0vqv/psycom_page_fid31389_asset_31385/44d168240cb76bbbc6ec828143505f51/Conflict_Concept?fm=webp&fit=thumb&q=65&w=864&h=576" 
+                                 alt="Conflict Concept" 
+                                 class="img-fluid rounded mb-3">
+                            <h3 class="card-title">How to Stop Negative Thoughts</h3>
+                            <p class="card-text">Learn effective techniques to manage and overcome negative thinking patterns that can impact your mental well-being.</p>
+                            <a href="https://www.healthcentral.com/mental-heath/negative-thinking?legacy=psycom" 
+                               class="btn btn-primary" 
+                               target="_blank">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <img src="https://images.ctfassets.net/zkw0qlnf0vqv/psycom_page_fid31958_asset_14576/87f8270d6f9b6abff590cc08c2d8c771/Seesaw_Scale_with_Emoticons_-_3D_Rendering?fm=webp&fit=thumb&q=65&w=864&h=576" 
+                                 alt="Negative Bias Scale" 
+                                 class="img-fluid rounded mb-3">
+                            <h3 class="card-title">Understanding Negative Bias</h3>
+                            <p class="card-text">Discover how our brain's tendency to focus on negative experiences affects our mental health and learn strategies to overcome it.</p>
+                            <ul class="list-unstyled mb-3">
+                                <li class="mb-2"><i class="fas fa-brain text-primary me-2"></i>Brain's natural survival mechanism</li>
+                                <li class="mb-2"><i class="fas fa-balance-scale text-primary me-2"></i>Impact on decision making</li>
+                                <li class="mb-2"><i class="fas fa-lightbulb text-primary me-2"></i>Techniques to counter bias</li>
+                            </ul>
+                            <a href="https://www.healthcentral.com/mental-health/negativity-bias?legacy=psycom" 
+                               class="btn btn-primary" 
+                               target="_blank">
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Helpful Videos Section -->
+            <div class="row mt-5">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center mb-4">Helpful Meditation & Mental Health Videos</h3>
+                            <p class="text-center mb-4">These carefully selected videos can help you on your mental health journey. Take a moment to watch and practice.</p>
+                            <div class="row g-4">
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/VpHz8Mb13_Y" 
+                                                    title="Meditation Video 1" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Mindful Meditation Guide</h5>
+                                            <p class="text-muted">Learn the basics of mindful meditation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/sfSDQRdIvTc" 
+                                                    title="Meditation Video 2" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Stress Relief Meditation</h5>
+                                            <p class="text-muted">Techniques for managing stress</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/ScsCleaQvEw" 
+                                                    title="Meditation Video 3" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Deep Breathing Exercise</h5>
+                                            <p class="text-muted">Practice deep breathing techniques</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/z0GtmPnqAd8" 
+                                                    title="Meditation Video 4" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Mindfulness Practice</h5>
+                                            <p class="text-muted">Daily mindfulness exercises</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/Qn6zpGO_sqQ" 
+                                                    title="Meditation Video 5" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Relaxation Techniques</h5>
+                                            <p class="text-muted">Methods for deep relaxation</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="video-card">
+                                        <div class="ratio ratio-16x9">
+                                            <iframe src="https://www.youtube.com/embed/U9YKY7fdwyg" 
+                                                    title="Meditation Video 6" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowfullscreen></iframe>
+                                        </div>
+                                        <div class="video-info mt-2">
+                                            <h5>Guided Meditation Practice</h5>
+                                            <p class="text-muted">Comprehensive meditation guide for beginners</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4">
+        <div class="container text-center">
+            <p class="mb-0">© 2024 Student Mental Health Support. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/app.js"></script>
+</body>
+</html>
